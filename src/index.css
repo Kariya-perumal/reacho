@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #2563EB;
+  --secondary: #7C3AED;
+  --accent: #22D3EE;
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+/* Premium Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Neon Glow Effects */
+.neon-blue {
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.5),
+              0 0 40px rgba(37, 99, 235, 0.3);
+}
+
+.neon-purple {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.5),
+              0 0 40px rgba(124, 58, 237, 0.3);
+}
+
+.neon-cyan {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.5),
+              0 0 40px rgba(34, 211, 238, 0.3);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 50%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Animated Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #22D3EE;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: width 0.15s, height 0.15s, border-color 0.15s;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor.active {
+  width: 40px;
+  height: 40px;
+  border-color: #7C3AED;
+}
+
+/* Service Card 3D Tilt Container */
+.tilt-card {
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+
+/* Portfolio Modal */
+.modal {
+  animation: modalEnter 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Timeline Line Animation */
+.timeline-line {
+  transition: height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Floating Particles */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float-particle 8s ease-in-out infinite;
+}
+
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-40px) translateX(20px); }
+}
+
+/* Magnetic Button */
+.magnetic-btn {
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Responsive Typography */
+@media (max-width: 640px) {
+  .hero-headline {
+    font-size: 3rem !important;
+    line-height: 1.05 !important;
+  }
+}
+

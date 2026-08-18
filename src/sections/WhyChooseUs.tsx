@@ -47,17 +47,17 @@ export default function WhyChooseUs() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="text-[#22D3EE] tracking-[4px] text-xs mb-3">THE DIFFERENCE</div>
-          <div className="text-7xl font-semibold tracking-[-3.4px]">Why Reach O</div>
+          <div className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-2px] md:tracking-[-3.4px]">Why Reach O</div>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 mb-20">
           {stats.map((stat, idx) => (
-            <div key={idx} className="bg-[#050508] py-9 text-center">
-              <div className="text-[56px] font-semibold tabular-nums tracking-tighter">
+            <div key={idx} className="bg-[#050508] py-6 sm:py-9 px-2 text-center">
+              <div className="text-3xl sm:text-4xl md:text-[56px] font-semibold tabular-nums tracking-tighter">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-xs tracking-[2.5px] text-white/50 mt-1">{stat.label}</div>
+              <div className="text-[10px] sm:text-xs tracking-[1.5px] sm:tracking-[2.5px] text-white/50 mt-1">{stat.label}</div>
             </div>
           ))}
         </div>

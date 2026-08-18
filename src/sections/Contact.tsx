@@ -63,7 +63,7 @@ export default function Contact() {
       <div className="grid md:grid-cols-5 gap-x-16 gap-y-14">
         <div className="md:col-span-3">
           <div className="text-[#22D3EE] tracking-[4px] text-xs mb-4">LET'S BUILD SOMETHING EXCEPTIONAL</div>
-          <div className="text-[74px] leading-none tracking-[-4.2px] font-semibold mb-8">Start Your<br />Project.</div>
+          <div className="text-4xl sm:text-6xl md:text-[74px] leading-tight md:leading-none tracking-[-2px] md:tracking-[-4.2px] font-semibold mb-6 md:mb-8">Start Your<br />Project.</div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

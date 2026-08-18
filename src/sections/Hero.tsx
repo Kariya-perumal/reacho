@@ -84,24 +84,24 @@ export default function Hero() {
       <div className="relative z-20 max-w-5xl px-6 text-center">
         <div className="inline-block px-4 py-1 rounded-full bg-white/5 text-xs tracking-[4px] mb-6 border border-white/10">EST 2018 • MADURAI, INDIA</div>
         
-        <h1 className="hero-headline text-[92px] md:text-[120px] font-semibold tracking-[-6.8px] leading-[0.86] mb-6">
+        <h1 className="hero-headline text-5xl sm:text-7xl md:text-[120px] font-semibold tracking-[-2px] sm:tracking-[-4px] md:tracking-[-6.8px] leading-[0.95] sm:leading-[0.9] md:leading-[0.86] mb-6">
           REACH<br />BEYOND<br /><span className="gradient-text">LIMITS</span>
         </h1>
         
-        <p className="max-w-[620px] mx-auto text-xl md:text-2xl text-white/70 tracking-[-0.2px] mb-11">
+        <p className="max-w-[620px] mx-auto text-lg sm:text-xl md:text-2xl text-white/70 tracking-[-0.2px] mb-8 sm:mb-11">
           We build brands, websites, digital experiences, and powerful marketing solutions that help businesses grow.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button 
             onClick={() => scrollTo('services')}
-            className="magnetic-btn group px-10 py-4 rounded-full bg-white text-[#050508] font-medium tracking-[1.5px] text-sm flex items-center justify-center gap-3 hover:bg-[#22D3EE] active:scale-[0.985] transition-all"
+            className="magnetic-btn group px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-white text-[#050508] font-medium tracking-[1.5px] text-xs sm:text-sm flex items-center justify-center gap-3 hover:bg-[#22D3EE] active:scale-[0.985] transition-all w-full sm:w-auto"
           >
             EXPLORE SERVICES
           </button>
           <button 
             onClick={() => scrollTo('contact')}
-            className="magnetic-btn px-10 py-4 rounded-full border border-white/40 hover:bg-white/5 font-medium tracking-[1.5px] text-sm flex items-center justify-center gap-3 active:scale-[0.985] transition-all"
+            className="magnetic-btn px-8 sm:px-10 py-3.5 sm:py-4 rounded-full border border-white/40 hover:bg-white/5 font-medium tracking-[1.5px] text-xs sm:text-sm flex items-center justify-center gap-3 active:scale-[0.985] transition-all w-full sm:w-auto"
           >
             START YOUR PROJECT
           </button>

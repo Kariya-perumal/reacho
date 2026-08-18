@@ -51,7 +51,7 @@ export default function Services() {
       <div className="flex justify-between items-end mb-14">
         <div>
           <div className="text-[#22D3EE] tracking-[4px] text-xs mb-3">WHAT WE OFFER</div>
-          <div className="text-7xl font-semibold tracking-[-3.4px]">Services</div>
+          <div className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-2px] md:tracking-[-3.4px]">Services</div>
         </div>
         <div className="text-right text-white/60 max-w-[250px] hidden md:block text-[15px]">Premium digital solutions for visionary brands.</div>
       </div>

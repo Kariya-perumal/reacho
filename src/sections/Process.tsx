@@ -13,7 +13,7 @@ export default function Process() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="text-[#22D3EE] tracking-[4px] text-xs mb-3">HOW WE WORK</div>
-          <div className="text-7xl font-semibold tracking-[-3.2px]">Our Process</div>
+          <div className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-2px] md:tracking-[-3.2px]">Our Process</div>
         </div>
 
         <div className="relative pl-8 md:pl-14">

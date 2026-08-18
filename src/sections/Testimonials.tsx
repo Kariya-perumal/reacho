@@ -21,19 +21,19 @@ export default function Testimonials() {
     <section className="max-w-5xl mx-auto px-6 py-24">
       <div className="text-center mb-12">
         <div className="text-[#22D3EE] tracking-[4px] text-xs mb-3">TRUSTED BY VISIONARIES</div>
-        <div className="text-6xl font-semibold tracking-[-2.6px]">What Our Clients Say</div>
+        <div className="text-4xl sm:text-6xl font-semibold tracking-[-1.5px] sm:tracking-[-2.6px]">What Our Clients Say</div>
       </div>
 
-      <div className="relative h-[210px] overflow-hidden">
+      <div className="relative min-h-[260px] sm:h-[230px] md:h-[210px] overflow-hidden">
         {testimonials.map((t, i) => (
           <div 
             key={i} 
-            className={`glass p-10 md:p-14 rounded-3xl absolute inset-0 transition-all duration-700 flex flex-col justify-center ${i === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}
+            className={`glass p-6 sm:p-10 md:p-14 rounded-3xl absolute inset-0 transition-all duration-700 flex flex-col justify-center ${i === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}
           >
-            <div className="text-[22px] md:text-3xl tracking-[-0.5px] leading-tight font-light max-w-[46ch] mb-10">"{t.quote}"</div>
+            <div className="text-base sm:text-[22px] md:text-3xl tracking-[-0.5px] leading-snug sm:leading-tight font-light max-w-[46ch] mb-6 sm:mb-10">"{t.quote}"</div>
             <div>
-              <div className="font-medium">{t.name}</div>
-              <div className="text-sm text-white/60">{t.role}</div>
+              <div className="font-medium text-sm sm:text-base">{t.name}</div>
+              <div className="text-xs sm:text-sm text-white/60">{t.role}</div>
             </div>
           </div>
         ))}

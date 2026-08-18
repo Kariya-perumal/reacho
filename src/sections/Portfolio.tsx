@@ -20,7 +20,7 @@ export default function Portfolio() {
       <div className="flex justify-between items-baseline mb-12">
         <div>
           <div className="text-[#22D3EE] tracking-[4px] text-xs mb-2">SELECTED WORK</div>
-          <div className="text-7xl font-semibold tracking-[-3.4px]">Portfolio</div>
+          <div className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-2px] md:tracking-[-3.4px]">Portfolio</div>
         </div>
         <div className="text-sm text-white/60 hidden md:block">VIEW ALL PROJECTS →</div>
       </div>
@@ -34,13 +34,13 @@ export default function Portfolio() {
           >
             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-black/90" />
             
-            <div className="relative p-9 z-10 w-full">
+            <div className="relative p-6 sm:p-9 z-10 w-full">
               <div className="uppercase text-xs tracking-[3px] text-[#22D3EE] mb-3">{project.category}</div>
-              <div className="text-white text-6xl tracking-[-2.5px] font-semibold mb-1.5">{project.title}</div>
-              <div className="text-white/60 text-lg">{project.client}</div>
+              <div className="text-white text-3xl sm:text-5xl md:text-6xl tracking-[-1.5px] md:tracking-[-2.5px] font-semibold mb-1.5">{project.title}</div>
+              <div className="text-white/60 text-sm sm:text-lg">{project.client}</div>
             </div>
             
-            <div className="absolute top-9 right-9 px-5 py-1 text-xs tracking-widest rounded-full border border-white/20 group-hover:bg-white group-hover:text-black transition-all">VIEW CASE</div>
+            <div className="absolute top-5 right-5 sm:top-9 sm:right-9 px-4 sm:px-5 py-1 text-[10px] sm:text-xs tracking-widest rounded-full border border-white/20 group-hover:bg-white group-hover:text-black transition-all">VIEW CASE</div>
           </div>
         ))}
       </div>
@@ -48,18 +48,18 @@ export default function Portfolio() {
       {/* Modal */}
       {selected !== null && current && (
         <div className="fixed inset-0 z-[90] bg-black/95 flex items-center justify-center p-4" onClick={closeProject}>
-          <div className="modal max-w-4xl w-full glass-dark rounded-3xl p-10 md:p-14 relative" onClick={e => e.stopPropagation()}>
-            <button onClick={closeProject} className="absolute top-8 right-8 text-white/60 hover:text-white">CLOSE</button>
+          <div className="modal max-w-4xl w-full glass-dark rounded-3xl p-6 sm:p-10 md:p-14 relative" onClick={e => e.stopPropagation()}>
+            <button onClick={closeProject} className="absolute top-6 right-6 text-white/60 hover:text-white text-xs sm:text-base">CLOSE</button>
             
-            <div className="uppercase tracking-[4px] text-xs text-[#22D3EE] mb-4">{current.category}</div>
-            <div className="text-[76px] leading-none tracking-[-4.2px] font-semibold mb-4">{current.title}</div>
-            <div className="text-2xl text-white/60 mb-9">{current.client}</div>
+            <div className="uppercase tracking-[4px] text-xs text-[#22D3EE] mb-3 sm:mb-4">{current.category}</div>
+            <div className="text-3xl sm:text-5xl md:text-[76px] leading-tight tracking-[-1.5px] md:tracking-[-4.2px] font-semibold mb-3 sm:mb-4">{current.title}</div>
+            <div className="text-lg sm:text-2xl text-white/60 mb-6 sm:mb-9">{current.client}</div>
             
-            <div className="text-xl max-w-2xl text-white/80 leading-tight mb-12">{current.desc}</div>
+            <div className="text-base sm:text-xl max-w-2xl text-white/80 leading-snug sm:leading-tight mb-8 sm:mb-12">{current.desc}</div>
             
-            <div className="flex gap-4">
-              <button className="px-9 py-3.5 rounded-full bg-white text-black font-medium tracking-wider text-sm">VISIT LIVE SITE</button>
-              <button onClick={closeProject} className="px-9 py-3.5 rounded-full border border-white/30 hover:bg-white/5">CLOSE PREVIEW</button>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <button className="px-9 py-3.5 rounded-full bg-white text-black font-medium tracking-wider text-sm w-full sm:w-auto">VISIT LIVE SITE</button>
+              <button onClick={closeProject} className="px-9 py-3.5 rounded-full border border-white/30 hover:bg-white/5 text-sm w-full sm:w-auto">CLOSE PREVIEW</button>
             </div>
           </div>
         </div>

@@ -82,7 +82,7 @@ export default function Hero() {
       </div>
 
       <div className="relative z-20 max-w-5xl px-6 text-center">
-        <div className="inline-block px-4 py-1 rounded-full bg-white/5 text-xs tracking-[4px] mb-6 border border-white/10">EST 2018 • NEW YORK</div>
+        <div className="inline-block px-4 py-1 rounded-full bg-white/5 text-xs tracking-[4px] mb-6 border border-white/10">EST 2018 • MADURAI, INDIA</div>
         
         <h1 className="hero-headline text-[92px] md:text-[120px] font-semibold tracking-[-6.8px] leading-[0.86] mb-6">
           REACH<br />BEYOND<br /><span className="gradient-text">LIMITS</span>

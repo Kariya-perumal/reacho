@@ -19,7 +19,11 @@ export default defineConfig(async ({ mode }) => {
 
   return {
     plugins,
+    server: {
+      host: true,
+      allowedHosts: true,
+    },
     envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
     define: processEnvDefines,
-  };
+  } as any;
 })

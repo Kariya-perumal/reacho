@@ -62,12 +62,14 @@ export default function LoadingScreen() {
         </Canvas>
       </div>
       
-      <div className="text-center">
-        <div className="flex items-center gap-3 mb-4 justify-center">
-          <div className="text-6xl font-semibold tracking-[-3.5px]">REACH</div>
-          <div className="text-6xl font-semibold tracking-[-3.5px] text-[#22D3EE]">O</div>
+      <div className="text-center flex flex-col items-center">
+        <img src="/logo-symbol.png" alt="REACH O Symbol" className="w-16 h-16 object-contain mb-4 animate-pulse" />
+        <div className="text-5xl md:text-6xl font-semibold tracking-[-3px] text-white mb-2">
+          RE<span className="text-[#22D3EE]">Λ</span>CH&nbsp;O
         </div>
-        <div className="text-[#22D3EE] text-sm tracking-[6px] font-medium">DIGITAL EXCELLENCE</div>
+        <div className="text-[#22D3EE] text-xs md:text-sm tracking-[4px] font-medium uppercase">
+          REACH FURTHER. EXPERIENCE BETTER.
+        </div>
       </div>
 
       <div className="mt-12 w-72">

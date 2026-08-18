@@ -31,11 +31,18 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-dark">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#2563EB] via-[#7C3AED] to-[#22D3EE]" />
-            <span className="font-semibold text-2xl tracking-[-1.5px]">REACH O</span>
-          </div>
+        <div 
+          className="flex items-center gap-3 cursor-pointer group"
+          onClick={() => scrollToSection('#hero')}
+        >
+          <img 
+            src="/logo-symbol.png" 
+            alt="REACH O Logo Symbol" 
+            className="w-8 h-8 md:w-9 md:h-9 object-contain group-hover:scale-105 transition-transform duration-300" 
+          />
+          <span className="font-semibold text-2xl md:text-3xl tracking-[-1.5px] text-white flex items-center">
+            RE<span className="text-[#22D3EE]">Λ</span>CH&nbsp;O
+          </span>
         </div>
 
         {/* Desktop Navigation */}

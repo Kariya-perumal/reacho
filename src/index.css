@@ -126,3 +126,20 @@ body {
   }
 }
 
+/* Footer Ambient Social Line Glow */
+@keyframes social-line-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(100%);
+  }
+}
+
+.animate-line-glow {
+  animation: social-line-glow 8s ease-in-out infinite;
+}
+
+

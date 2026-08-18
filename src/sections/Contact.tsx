@@ -90,8 +90,16 @@ export default function Contact() {
           </div>
           
           <div className="text-sm text-white/70 leading-relaxed">
-            Reach O<br />New York • London • Singapore<br /><br />
-            <a href="mailto:studio@reacho.co" className="text-[#22D3EE] hover:underline">studio@reacho.co</a>
+            Reach O<br />
+            Vagaikulam Pirivu,<br />
+            Siththalai Road,<br />
+            Thirumangalam,<br />
+            Madurai – 625706,<br />
+            Tamil Nadu, India<br /><br />
+            <a href="mailto:helloreacho.in@gmail.com" className="text-[#22D3EE] hover:underline">helloreacho.in@gmail.com</a><br />
+            <a href="tel:+919159722919" className="text-[#22D3EE] hover:underline">+91 9159722919</a><br />
+            <a href="tel:+916381425332" className="text-[#22D3EE] hover:underline">+91 6381425332</a><br />
+            <a href="https://www.instagram.com/reacho.in/" className="text-[#22D3EE] hover:underline" target="_blank" rel="noopener noreferrer">@reacho.in</a>
           </div>
         </div>
       </div>

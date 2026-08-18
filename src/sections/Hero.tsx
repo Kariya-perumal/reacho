@@ -1,196 +1,112 @@
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useRef, useState } from 'react';
-import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import { Float, MeshDistortMaterial } from '@react-three/drei';
-
-function CyberCore3D({ mousePos }: { mousePos: { x: number; y: number } }) {
-  const mainGroupRef = useRef<THREE.Group>(null!);
-  const knotRef = useRef<THREE.Mesh>(null!);
-  const ring1Ref = useRef<THREE.Mesh>(null!);
-  const ring2Ref = useRef<THREE.Mesh>(null!);
-  const ring3Ref = useRef<THREE.Mesh>(null!);
-  const particlesRef = useRef<THREE.Group>(null!);
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-
-    if (mainGroupRef.current) {
-      mainGroupRef.current.rotation.y = THREE.MathUtils.lerp(
-        mainGroupRef.current.rotation.y,
-        time * 0.15 + mousePos.x * 0.5,
-        0.05
-      );
-      mainGroupRef.current.rotation.x = THREE.MathUtils.lerp(
-        mainGroupRef.current.rotation.x,
-        mousePos.y * 0.35 + Math.sin(time * 0.3) * 0.1,
-        0.05
-      );
-    }
-
-    if (knotRef.current) {
-      knotRef.current.rotation.x = time * 0.3;
-      knotRef.current.rotation.y = time * 0.25;
-    }
-
-    if (ring1Ref.current) {
-      ring1Ref.current.rotation.x = time * 0.2;
-      ring1Ref.current.rotation.z = time * 0.15;
-    }
-
-    if (ring2Ref.current) {
-      ring2Ref.current.rotation.y = time * -0.25;
-      ring2Ref.current.rotation.x = time * 0.1;
-    }
-
-    if (ring3Ref.current) {
-      ring3Ref.current.rotation.z = time * -0.3;
-      ring3Ref.current.rotation.x = time * -0.2;
-    }
-
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y = time * 0.04;
-    }
-  });
-
-  const particleCoords = Array.from({ length: 48 }, (_, i) => ({
-    pos: [
-      (Math.random() - 0.5) * 14,
-      (Math.random() - 0.5) * 10,
-      (Math.random() - 0.5) * 12
-    ] as [number, number, number],
-    scale: Math.random() * 0.11 + 0.05,
-    color: i % 3 === 0 ? "#22D3EE" : i % 3 === 1 ? "#7C3AED" : "#2563EB"
-  }));
-
-  return (
-    <group ref={mainGroupRef}>
-      {/* Central 3D Distorted Core Mesh */}
-      <Float speed={2} rotationIntensity={0.4} floatIntensity={0.7}>
-        <mesh ref={knotRef} scale={1.6}>
-          <torusKnotGeometry args={[1.2, 0.36, 128, 32]} />
-          <MeshDistortMaterial
-            color="#22D3EE"
-            roughness={0.15}
-            metalness={0.85}
-            distort={0.35}
-            speed={2.2}
-          />
-        </mesh>
-
-        {/* Outer Glowing Wireframe Overlay */}
-        <mesh scale={1.95}>
-          <icosahedronGeometry args={[1.4, 2]} />
-          <meshBasicMaterial color="#7C3AED" wireframe transparent opacity={0.35} />
-        </mesh>
-      </Float>
-
-      {/* Orbiting 3D Ring 1 */}
-      <mesh ref={ring1Ref} scale={3.0}>
-        <torusGeometry args={[1.4, 0.015, 16, 100]} />
-        <meshStandardMaterial color="#22D3EE" emissive="#22D3EE" emissiveIntensity={0.7} roughness={0.1} />
-      </mesh>
-
-      {/* Orbiting 3D Ring 2 */}
-      <mesh ref={ring2Ref} scale={3.8}>
-        <torusGeometry args={[1.3, 0.012, 16, 100]} />
-        <meshStandardMaterial color="#7C3AED" emissive="#7C3AED" emissiveIntensity={0.8} roughness={0.1} />
-      </mesh>
-
-      {/* Orbiting 3D Ring 3 */}
-      <mesh ref={ring3Ref} scale={4.6}>
-        <torusGeometry args={[1.2, 0.01, 16, 100]} />
-        <meshStandardMaterial color="#2563EB" emissive="#2563EB" emissiveIntensity={0.6} roughness={0.1} />
-      </mesh>
-
-      {/* 3D Floating Particle Sphere Cloud */}
-      <group ref={particlesRef}>
-        {particleCoords.map((p, i) => (
-          <mesh key={i} position={p.pos} scale={p.scale}>
-            <sphereGeometry args={[1, 16, 16]} />
-            <meshStandardMaterial color={p.color} emissive={p.color} emissiveIntensity={0.9} />
-          </mesh>
-        ))}
-      </group>
-    </group>
-  );
-}
+import { ArrowRight, Sparkles, Zap, ShieldCheck } from 'lucide-react';
 
 export default function Hero() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({
-      x: ((e.clientX - rect.left) / rect.width - 0.5) * 1.6,
-      y: ((e.clientY - rect.top) / rect.height - 0.5) * 1.6,
-    });
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      const touch = e.touches[0];
-      const rect = e.currentTarget.getBoundingClientRect();
-      setMousePos({
-        x: ((touch.clientX - rect.left) / rect.width - 0.5) * 1.6,
-        y: ((touch.clientY - rect.top) / rect.height - 0.5) * 1.6,
-      });
-    }
-  };
-
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
-    <section 
-      className="relative min-h-[100dvh] flex items-center justify-center pt-20 overflow-hidden bg-[#050508]" 
-      onMouseMove={handleMouseMove}
-      onTouchMove={handleTouchMove}
-    >
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        <Canvas camera={{ position: [0, 0, 14], fov: 48 }}>
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[10, 10, 10]} intensity={1.5} color="#22D3EE" />
-          <pointLight position={[-10, -10, -10]} intensity={2.0} color="#7C3AED" />
-          <pointLight position={[0, 5, 5]} intensity={1.2} color="#2563EB" />
-          <CyberCore3D mousePos={mousePos} />
-        </Canvas>
-      </div>
+    <section className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-[#050508]">
+      {/* Ambient Glowing Aurora Background Orbs */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[350px] sm:h-[500px] bg-gradient-to-tr from-[#2563EB]/25 via-[#7C3AED]/25 to-[#22D3EE]/25 rounded-full blur-[140px] pointer-events-none animate-pulse" />
+      
+      {/* Cyber Grid Lines Overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.15] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
+          backgroundSize: '36px 36px',
+          maskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%)'
+        }}
+      />
 
       <div className="relative z-20 max-w-5xl px-6 text-center">
-        <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 text-xs tracking-[4px] mb-6 border border-white/10 backdrop-blur-md">
-          EST 2018 • MADURAI, INDIA
-        </div>
-        
-        <h1 className="hero-headline text-5xl sm:text-7xl md:text-[120px] font-semibold tracking-[-2px] sm:tracking-[-4px] md:tracking-[-6.8px] leading-[0.95] sm:leading-[0.9] md:leading-[0.86] mb-6">
-          REACH<br />BEYOND<br /><span className="gradient-text">LIMITS</span>
-        </h1>
-        
-        <p className="max-w-[620px] mx-auto text-lg sm:text-xl md:text-2xl text-white/80 tracking-[-0.2px] mb-8 sm:mb-11">
-          We build brands, websites, digital experiences, and powerful marketing solutions that help businesses grow.
-        </p>
+        {/* Status Pill Badge */}
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.06] border border-white/15 backdrop-blur-md mb-8 text-xs font-medium tracking-wider text-white/90 shadow-[0_0_20px_rgba(34,211,238,0.15)]"
+        >
+          <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-ping" />
+          <span className="text-[#22D3EE] font-semibold">EST 2018</span>
+          <span className="text-white/30">•</span>
+          <span>MADURAI, INDIA</span>
+        </motion.div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        {/* Hero Headline */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="hero-headline text-5xl sm:text-7xl md:text-8xl lg:text-[104px] font-bold tracking-[-2.5px] sm:tracking-[-4px] md:tracking-[-6px] leading-[0.96] sm:leading-[0.92] mb-6 text-white"
+        >
+          REACH BEYOND<br />
+          <span className="gradient-text">LIMITS</span>
+        </motion.h1>
+
+        {/* Subtitle Description */}
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="max-w-[640px] mx-auto text-base sm:text-xl md:text-2xl text-white/75 font-normal tracking-[-0.2px] leading-relaxed mb-10"
+        >
+          We build high-converting brands, modern web applications, digital experiences, and powerful marketing solutions that help businesses scale.
+        </motion.p>
+
+        {/* CTA Buttons */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+        >
           <button 
             onClick={() => scrollTo('services')}
-            className="magnetic-btn group px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-white text-[#050508] font-medium tracking-[1.5px] text-xs sm:text-sm flex items-center justify-center gap-3 hover:bg-[#22D3EE] active:scale-[0.985] transition-all w-full sm:w-auto shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+            className="group px-8 sm:px-10 py-4 rounded-full bg-white text-[#050508] font-semibold tracking-wider text-xs sm:text-sm flex items-center justify-center gap-3 hover:bg-[#22D3EE] hover:shadow-[0_0_35px_rgba(34,211,238,0.4)] active:scale-[0.98] transition-all w-full sm:w-auto"
           >
             EXPLORE SERVICES
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </button>
+          
           <button 
             onClick={() => scrollTo('contact')}
-            className="magnetic-btn px-8 sm:px-10 py-3.5 sm:py-4 rounded-full border border-white/40 hover:bg-white/10 font-medium tracking-[1.5px] text-xs sm:text-sm flex items-center justify-center gap-3 active:scale-[0.985] transition-all w-full sm:w-auto backdrop-blur-md"
+            className="px-8 sm:px-10 py-4 rounded-full border border-white/30 hover:border-white/60 hover:bg-white/10 text-white font-semibold tracking-wider text-xs sm:text-sm flex items-center justify-center gap-3 backdrop-blur-md active:scale-[0.98] transition-all w-full sm:w-auto"
           >
             START YOUR PROJECT
           </button>
-        </div>
+        </motion.div>
+
+        {/* Feature Highlight Pills */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-white/60 font-medium"
+        >
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+            <Zap size={14} className="text-[#22D3EE]" />
+            <span>Fast Turnaround</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+            <Sparkles size={14} className="text-[#7C3AED]" />
+            <span>Custom Web & Mobile</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+            <ShieldCheck size={14} className="text-[#2563EB]" />
+            <span>100% Guaranteed Quality</span>
+          </div>
+        </motion.div>
       </div>
 
+      {/* Scroll Indicator */}
       <motion.div 
-        animate={{ y: [0, 14, 0] }} 
-        transition={{ duration: 2.1, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[10px] tracking-[4px] text-white/50 z-20 pointer-events-none"
+        animate={{ y: [0, 10, 0] }} 
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] tracking-[4px] text-white/40 z-20 pointer-events-none"
       >
         SCROLL TO BEGIN
       </motion.div>

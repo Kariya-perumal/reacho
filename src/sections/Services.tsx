@@ -1,6 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -12,22 +10,104 @@ import {
   ShieldCheck, 
   Users, 
   Target, 
-  BarChart3 
+  Code2,
+  Search,
+  Bot,
+  PenTool,
+  Megaphone,
+  Share2,
+  Palette,
+  Monitor,
+  Smartphone,
+  Film,
+  Camera
 } from 'lucide-react';
 
 const services = [
-  { title: "Digital Marketing", icon: "M", desc: "Data-driven campaigns that convert" },
-  { title: "Social Media Marketing", icon: "S", desc: "Engagement that builds communities" },
-  { title: "Logo Design", icon: "L", desc: "Timeless marks with meaning" },
-  { title: "Brand Identity", icon: "B", desc: "Complete visual ecosystems" },
-  { title: "Web Design", icon: "W", desc: "Stunning digital interfaces" },
-  { title: "UI/UX Design", icon: "U", desc: "Intuitive user experiences" },
-  { title: "Video Editing", icon: "V", desc: "Cinematic storytelling" },
-  { title: "Photo Editing", icon: "P", desc: "Visual perfection" },
-  { title: "Full Stack Development", icon: "F", desc: "Scalable digital platforms" },
-  { title: "SEO", icon: "O", desc: "Visibility that lasts" },
-  { title: "AI Automation", icon: "A", desc: "Intelligent systems & workflows" },
-  { title: "Content Strategy", icon: "C", desc: "Stories that resonate" },
+  { 
+    title: "Full Stack Development", 
+    desc: "Scalable digital platforms",
+    icon: Code2,
+    accentColor: "#22D3EE",
+    bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "SEO", 
+    desc: "Visibility that lasts",
+    icon: Search,
+    accentColor: "#22D3EE",
+    bgImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "AI Automation", 
+    desc: "Intelligent systems & workflows",
+    icon: Bot,
+    accentColor: "#A855F7",
+    bgImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Content Strategy", 
+    desc: "Stories that resonate",
+    icon: PenTool,
+    accentColor: "#A855F7",
+    bgImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Digital Marketing", 
+    desc: "Data-driven campaigns that convert",
+    icon: Megaphone,
+    accentColor: "#22D3EE",
+    bgImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Social Media Marketing", 
+    desc: "Engagement that builds communities",
+    icon: Share2,
+    accentColor: "#A855F7",
+    bgImage: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Logo Design", 
+    desc: "Timeless marks with meaning",
+    icon: Palette,
+    accentColor: "#22D3EE",
+    bgImage: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Brand Identity", 
+    desc: "Complete visual ecosystems",
+    icon: ShieldCheck,
+    accentColor: "#A855F7",
+    bgImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Web Design", 
+    desc: "Stunning digital interfaces",
+    icon: Monitor,
+    accentColor: "#22D3EE",
+    bgImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "UI/UX Design", 
+    desc: "Intuitive user experiences",
+    icon: Smartphone,
+    accentColor: "#A855F7",
+    bgImage: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Video Editing", 
+    desc: "Cinematic storytelling",
+    icon: Film,
+    accentColor: "#22D3EE",
+    bgImage: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"
+  },
+  { 
+    title: "Photo Editing", 
+    desc: "Visual perfection",
+    icon: Camera,
+    accentColor: "#A855F7",
+    bgImage: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80"
+  }
 ];
 
 interface ServiceDetail {
@@ -45,19 +125,9 @@ const serviceDetails: Record<string, ServiceDetail> = {
   "Full Stack Development": {
     tagline: "Build scalable digital platforms engineered for performance, reliability, and growth.",
     referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
     overview: "Full Stack Development delivers end-to-end software architecture combining intuitive frontends with powerful backend systems. We build secure, cloud-ready applications that handle complex business workflows and scale seamlessly.",
-    deliverables: [
-      "Frontend Development",
-      "Backend Architecture",
-      "Database Integration",
-      "API Development (REST & GraphQL)",
-      "Authentication & Security",
-      "Admin & Analytics Dashboards",
-      "Third-Party Integrations",
-      "Performance Optimization",
-      "Responsive Web Applications",
-      "Deployment & Maintenance"
-    ],
+    deliverables: ["Frontend Development", "Backend Architecture", "Database Integration", "API Development (REST & GraphQL)", "Authentication & Security", "Admin & Analytics Dashboards", "Third-Party Integrations", "Performance Optimization", "Responsive Web Applications", "Deployment & Maintenance"],
     process: [
       { num: "01", name: "Discover", desc: "Understand business goals, target audience, technical specifications, and system requirements." },
       { num: "02", name: "Strategize", desc: "Define database schemas, API architecture, technology stack, and security protocols." },
@@ -73,23 +143,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Startups", "Growing Brands", "SaaS Companies", "E-commerce Platforms", "Enterprises"]
   },
-
   "SEO": {
     tagline: "Dominate search rankings and drive sustainable organic revenue for your brand.",
     referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
     overview: "Search Engine Optimization transforms your digital presence by positioning your website at the top of search engine results. We optimize technical infrastructure, content relevance, and domain authority to turn organic search into your most profitable acquisition channel.",
-    deliverables: [
-      "Technical SEO Audits",
-      "High-Intent Keyword Strategy",
-      "On-Page Content Optimization",
-      "Site Speed & Core Web Vitals",
-      "Schema Markup Implementation",
-      "Backlink & Authority Building",
-      "Local SEO & Google Business Profile",
-      "Competitive Gap Analysis",
-      "Organic Search Tracking & Analytics",
-      "Monthly Growth Reporting"
-    ],
+    deliverables: ["Technical SEO Audits", "High-Intent Keyword Strategy", "On-Page Content Optimization", "Site Speed & Core Web Vitals", "Schema Markup Implementation", "Backlink & Authority Building", "Local SEO & Google Business Profile", "Competitive Gap Analysis", "Organic Search Tracking & Analytics", "Monthly Growth Reporting"],
     process: [
       { num: "01", name: "Discover", desc: "Audit site crawlability, indexability, speed, technical health, and keyword positions." },
       { num: "02", name: "Strategize", desc: "Develop high-value keyword roadmaps, content pillars, and link-building approaches." },
@@ -105,23 +164,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Growing Brands", "Local Businesses", "E-commerce Stores", "B2B Services", "SaaS Companies"]
   },
-
   "AI Automation": {
     tagline: "Streamline business operations with custom intelligent workflows and automated agents.",
     referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
     overview: "AI Automation embeds artificial intelligence directly into your daily operations. We automate repetitive tasks, build intelligent customer assistants, and connect your business software so your team can focus on high-value strategy.",
-    deliverables: [
-      "AI Workflow Automation",
-      "Business Process Automation",
-      "Custom AI Chatbots & Assistants",
-      "Data Extraction & Structuring",
-      "API & SaaS Integrations",
-      "Automated Lead Routing",
-      "Productivity Dashboards",
-      "Custom AI Models & Agents",
-      "Document Parsing Systems",
-      "Automated Notification Workflows"
-    ],
+    deliverables: ["AI Workflow Automation", "Business Process Automation", "Custom AI Chatbots & Assistants", "Data Extraction & Structuring", "API & SaaS Integrations", "Automated Lead Routing", "Productivity Dashboards", "Custom AI Models & Agents", "Document Parsing Systems", "Automated Notification Workflows"],
     process: [
       { num: "01", name: "Discover", desc: "Map existing manual business processes, bottlenecks, and automation opportunities." },
       { num: "02", name: "Strategize", desc: "Design custom AI workflow logic, prompt structures, and API trigger points." },
@@ -137,22 +185,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Fast-Growing Teams", "Service Agencies", "E-commerce Operations", "Sales Teams", "Enterprises"]
   },
-
   "Content Strategy": {
     tagline: "Craft compelling brand narratives that attract, educate, and convert your ideal audience.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
     overview: "Content Strategy transforms brand messaging into a powerful growth engine. We define content pillars, editorial calendars, and brand storytelling that build thought leadership and turn passive readers into loyal customers.",
-    deliverables: [
-      "Brand Messaging Framework",
-      "Content Pillar Definition",
-      "Editorial & Publishing Calendars",
-      "Audience Persona Research",
-      "Conversion-Focused Copywriting",
-      "Lead Magnet & Ebook Production",
-      "Blog & Article Strategy",
-      "Email Campaign Strategy",
-      "Social Content Frameworks",
-      "Performance Analytics"
-    ],
+    deliverables: ["Brand Messaging Framework", "Content Pillar Definition", "Editorial & Publishing Calendars", "Audience Persona Research", "Conversion-Focused Copywriting", "Lead Magnet & Ebook Production", "Blog & Article Strategy", "Email Campaign Strategy", "Social Content Frameworks", "Performance Analytics"],
     process: [
       { num: "01", name: "Discover", desc: "Analyze audience pain points, brand story, and channel opportunities." },
       { num: "02", name: "Strategize", desc: "Establish content pillars, brand tone of voice, and publishing cadence." },
@@ -168,22 +206,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["B2B Companies", "Personal Brands", "SaaS Ventures", "E-commerce Brands", "Thought Leaders"]
   },
-
   "Digital Marketing": {
     tagline: "Maximize return on ad spend with targeted, data-driven multi-channel marketing campaigns.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
     overview: "Digital Marketing connects your business with high-intent buyers across digital channels. We manage paid advertising, conversion funnels, and performance tracking to deliver consistent, profitable revenue growth.",
-    deliverables: [
-      "Paid Search Campaigns (Google Ads)",
-      "Paid Social Ads (Meta, LinkedIn)",
-      "Multi-Channel Marketing Strategy",
-      "Audience Research & Targeting",
-      "Conversion Funnel Optimization",
-      "High-Converting Ad Copy",
-      "A/B Creative Split Testing",
-      "Retargeting & Remarketing",
-      "Campaign Analytics & Attribution",
-      "Growth Strategy Reporting"
-    ],
+    deliverables: ["Paid Search Campaigns (Google Ads)", "Paid Social Ads (Meta, LinkedIn)", "Multi-Channel Marketing Strategy", "Audience Research & Targeting", "Conversion Funnel Optimization", "High-Converting Ad Copy", "A/B Creative Split Testing", "Retargeting & Remarketing", "Campaign Analytics & Attribution", "Growth Strategy Reporting"],
     process: [
       { num: "01", name: "Discover", desc: "Analyze customer acquisition costs, target market economics, and funnels." },
       { num: "02", name: "Strategize", desc: "Plan budget allocation, ad channels, messaging angles, and target audiences." },
@@ -199,22 +227,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["E-commerce Brands", "Local Businesses", "B2B Companies", "Direct-to-Consumer Brands", "Service Businesses"]
   },
-
   "Social Media Marketing": {
     tagline: "Build an active, loyal community around your brand with strategic social content.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80",
     overview: "Social Media Marketing elevates your brand presence on key social platforms. We produce engaging reels, posts, and interactive campaigns that boost brand recognition, foster community, and drive direct sales.",
-    deliverables: [
-      "Platform Strategy (Instagram, Facebook, LinkedIn)",
-      "Content Planning & Scheduling",
-      "Short-Form Video & Reels",
-      "Custom Post Graphics & Visuals",
-      "Community Engagement & Moderation",
-      "Social Media Copywriting",
-      "Hashtag & Trend Optimization",
-      "Influencer Collaboration Strategy",
-      "Paid Social Post Boosting",
-      "Monthly Performance Analytics"
-    ],
+    deliverables: ["Platform Strategy (Instagram, Facebook, LinkedIn)", "Content Planning & Scheduling", "Short-Form Video & Reels", "Custom Post Graphics & Visuals", "Community Engagement & Moderation", "Social Media Copywriting", "Hashtag & Trend Optimization", "Influencer Collaboration Strategy", "Paid Social Post Boosting", "Monthly Performance Analytics"],
     process: [
       { num: "01", name: "Discover", desc: "Audit existing social presence, target demographics, and brand positioning." },
       { num: "02", name: "Strategize", desc: "Develop monthly content calendars, reel themes, and post schedules." },
@@ -230,22 +248,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Lifestyle Brands", "Local Businesses", "Creators", "Consumer Products", "E-commerce Shops"]
   },
-
   "Logo Design": {
     tagline: "Distinctive, timeless brand marks crafted to leave a powerful lasting impression.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80",
     overview: "Logo Design creates the visual anchor of your business identity. We translate your values, vision, and market positioning into a memorable, versatile logo mark that commands attention across all media.",
-    deliverables: [
-      "Logo Concept Development",
-      "Brand Symbolism & Ideation",
-      "Primary & Secondary Logo Marks",
-      "Monogram & Icon Variations",
-      "Color Palette Direction",
-      "Typography Recommendations",
-      "Vector Source Files (AI, SVG, EPS)",
-      "Export Formats (PNG, JPG, WebP)",
-      "Social Media Kit & Favicons",
-      "Usage & Scalability Guidelines"
-    ],
+    deliverables: ["Logo Concept Development", "Brand Symbolism & Ideation", "Primary & Secondary Logo Marks", "Monogram & Icon Variations", "Color Palette Direction", "Typography Recommendations", "Vector Source Files (AI, SVG, EPS)", "Export Formats (PNG, JPG, WebP)", "Social Media Kit & Favicons", "Usage & Scalability Guidelines"],
     process: [
       { num: "01", name: "Discover", desc: "Uncover your brand story, target market, industry position, and style goals." },
       { num: "02", name: "Strategize", desc: "Sketch foundational concept directions and refine visual symbolism." },
@@ -261,22 +269,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Startups", "Brand Rebrands", "Product Lines", "Professional Services", "Small Businesses"]
   },
-
   "Brand Identity": {
     tagline: "Cohesive visual ecosystems that define your brand and inspire lasting customer trust.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80",
     overview: "Brand Identity shapes how audiences perceive and remember your business. We build complete design systems—from color palettes and typography to brand guidelines and collaterals—that create instant visual authority.",
-    deliverables: [
-      "Complete Logo System",
-      "Brand Style Guidelines PDF",
-      "Color Palette & Specifications",
-      "Typography System",
-      "Visual Language & Patterns",
-      "Social Media Templates",
-      "Business Card & Print Collaterals",
-      "Marketing Asset Templates",
-      "Brand Tone & Style Direction",
-      "Digital Asset Libraries"
-    ],
+    deliverables: ["Complete Logo System", "Brand Style Guidelines PDF", "Color Palette & Specifications", "Typography System", "Visual Language & Patterns", "Social Media Templates", "Business Card & Print Collaterals", "Marketing Asset Templates", "Brand Tone & Style Direction", "Digital Asset Libraries"],
     process: [
       { num: "01", name: "Discover", desc: "Deep dive into brand ethos, audience psychology, and competitive landscape." },
       { num: "02", name: "Strategize", desc: "Establish color psychology, font pairings, and visual style principles." },
@@ -292,22 +290,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Growing Companies", "Rebranding Projects", "Corporate Businesses", "Premium Brands"]
   },
-
   "Web Design": {
     tagline: "High-converting, aesthetically stunning websites built for engagement and impact.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
     overview: "Web Design pairs modern design aesthetics with clear visual hierarchy to convert site visitors into clients. We design responsive, fast-loading, and visually captivating websites structured around your business goals.",
-    deliverables: [
-      "Custom Website UI Layouts",
-      "Mobile-First Responsive Design",
-      "Landing Page Design",
-      "Visual Hierarchy & Typography",
-      "Interactive Experience Specs",
-      "Conversion-Focused Layouts",
-      "Product Showcase Pages",
-      "Custom Component Design",
-      "Micro-Animation Specs",
-      "Developer Handoff Assets"
-    ],
+    deliverables: ["Custom Website UI Layouts", "Mobile-First Responsive Design", "Landing Page Design", "Visual Hierarchy & Typography", "Interactive Experience Specs", "Conversion-Focused Layouts", "Product Showcase Pages", "Custom Component Design", "Micro-Animation Specs", "Developer Handoff Assets"],
     process: [
       { num: "01", name: "Discover", desc: "Map business objectives, target audience expectations, and conversion paths." },
       { num: "02", name: "Strategize", desc: "Wireframe page architecture, content layout, and visual design themes." },
@@ -323,22 +311,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Service Businesses", "Startups", "Corporate Sites", "Portfolios", "Landing Pages"]
   },
-
   "UI/UX Design": {
     tagline: "Intuitive user interfaces and seamless user flows engineered for web & mobile applications.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80",
     overview: "UI/UX Design turns complex digital products into intuitive, effortless experiences. We conduct user research, design wireframes, and build accessible user interfaces that boost retention and user delight.",
-    deliverables: [
-      "User Research & Personas",
-      "Information Architecture",
-      "Wireframes (Low & High Fidelity)",
-      "User Flow Diagrams",
-      "Interface Design (Web & App)",
-      "Interactive Prototypes",
-      "Design Systems & Component Libraries",
-      "Usability Testing",
-      "Accessibility (WCAG) Compliance",
-      "Developer Handoff Files"
-    ],
+    deliverables: ["User Research & Personas", "Information Architecture", "Wireframes (Low & High Fidelity)", "User Flow Diagrams", "Interface Design (Web & App)", "Interactive Prototypes", "Design Systems & Component Libraries", "Usability Testing", "Accessibility (WCAG) Compliance", "Developer Handoff Files"],
     process: [
       { num: "01", name: "Discover", desc: "Research target user goals, pain points, and current workflow bottlenecks." },
       { num: "02", name: "Strategize", desc: "Map information architecture, navigation structures, and key user flows." },
@@ -354,22 +332,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Mobile Apps", "SaaS Platforms", "Complex Web Applications", "Tech Startups", "Portals"]
   },
-
   "Video Editing": {
     tagline: "Cinematic video editing that captures attention and delivers your message with impact.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80",
     overview: "Video Editing transforms raw camera footage into engaging visual stories. We combine sharp pacing, color grading, sound design, and motion graphics to produce videos that command attention on any platform.",
-    deliverables: [
-      "Short-Form Edits (Reels, TikToks, Shorts)",
-      "Promotional & Commercial Videos",
-      "Corporate Brand Films",
-      "Motion Graphics & Titles",
-      "Color Grading & Correction",
-      "Sound Design & Audio Mixing",
-      "Subtitle & Caption Styling",
-      "Multi-Camera Editing",
-      "Social Aspect Ratios (9:16, 16:9, 1:1)",
-      "4K High-Res Render Exports"
-    ],
+    deliverables: ["Short-Form Edits (Reels, TikToks, Shorts)", "Promotional & Commercial Videos", "Corporate Brand Films", "Motion Graphics & Titles", "Color Grading & Correction", "Sound Design & Audio Mixing", "Subtitle & Caption Styling", "Multi-Camera Editing", "Social Aspect Ratios (9:16, 16:9, 1:1)", "4K High-Res Render Exports"],
     process: [
       { num: "01", name: "Discover", desc: "Review project goals, raw media files, style references, and target channels." },
       { num: "02", name: "Strategize", desc: "Plan storyline narrative, edit pacing, and background audio track." },
@@ -385,22 +353,12 @@ const serviceDetails: Record<string, ServiceDetail> = {
     ],
     idealFor: ["Brands", "Content Creators", "E-commerce Marketing", "Product Launches", "Event Coverage"]
   },
-
   "Photo Editing": {
     tagline: "Professional photo retouching and visual enhancements for commercial perfection.",
+    referenceLogo: "/logo-symbol.png",
+    referenceImage: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80",
     overview: "Photo Editing elevates raw photography to commercial standards. From product retouching and background cleanup to color correction and high-end enhancements, we ensure your imagery looks impeccable.",
-    deliverables: [
-      "High-End Beauty Retouching",
-      "E-Commerce Product Retouching",
-      "Background Removal & Compositing",
-      "Color Correction & Grading",
-      "Exposure & Lighting Enhancement",
-      "Object Removal & Clean Up",
-      "Social Media Visual Assets",
-      "Commercial Advertising Retouching",
-      "High-Res Web & Print Exports",
-      "Batch Image Processing"
-    ],
+    deliverables: ["High-End Beauty Retouching", "E-Commerce Product Retouching", "Background Removal & Compositing", "Color Correction & Grading", "Exposure & Lighting Enhancement", "Object Removal & Clean Up", "Social Media Visual Assets", "Commercial Advertising Retouching", "High-Res Web & Print Exports", "Batch Image Processing"],
     process: [
       { num: "01", name: "Discover", desc: "Analyze original image assets, lighting flaws, and target visual style." },
       { num: "02", name: "Strategize", desc: "Plan non-destructive editing layers, retouching scope, and color pass." },
@@ -418,117 +376,80 @@ const serviceDetails: Record<string, ServiceDetail> = {
   }
 };
 
-function ServiceIcon({ letter }: { letter: string }) {
-  const meshRef = useRef<THREE.Group>(null!);
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 1.6;
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.3;
-    }
-  });
-
-  return (
-    <group ref={meshRef}>
-      <mesh>
-        <octahedronGeometry args={[0.9]} />
-        <meshBasicMaterial color="#22D3EE" wireframe />
-      </mesh>
-      <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[0.42]} />
-        <meshBasicMaterial color="#7C3AED" />
-      </mesh>
-    </group>
-  );
-}
-
 export default function Services() {
-  const [hovered, setHovered] = useState<number | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
-  // Close modal on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setSelectedService(null);
-      }
+      if (e.key === 'Escape') setSelectedService(null);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Lock body scroll when modal is open
   useEffect(() => {
-    if (selectedService) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    document.body.style.overflow = selectedService ? 'hidden' : 'auto';
   }, [selectedService]);
 
   const activeDetail = selectedService ? serviceDetails[selectedService] : null;
-  const activeServiceObj = selectedService ? services.find(s => s.title === selectedService) : null;
-
-  const handleGetStarted = () => {
-    setSelectedService(null);
-    setTimeout(() => {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 150);
-  };
 
   return (
     <section id="services" className="max-w-7xl mx-auto px-6 pt-20 pb-24 relative">
       <div className="flex justify-between items-end mb-14">
         <div>
-          <div className="text-[#22D3EE] tracking-[4px] text-xs mb-3 font-semibold">WHAT WE OFFER</div>
+          <div className="text-[#22D3EE] tracking-[4px] text-xs mb-3 font-semibold uppercase">WHAT WE OFFER</div>
           <div className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-2px] md:tracking-[-3.4px]">Services</div>
         </div>
-        <div className="text-right text-white/60 max-w-[250px] hidden md:block text-[15px]">Premium digital solutions for visionary brands.</div>
+        <div className="text-right text-white/60 max-w-[250px] hidden md:block text-[15px]">
+          Premium digital solutions for visionary brands.
+        </div>
       </div>
 
-      {/* Services Grid (Unchanged Visual Design) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {services.map((service, index) => (
-          <div
-            key={index}
-            onClick={() => setSelectedService(service.title)}
-            className="tilt-card group relative glass p-8 rounded-3xl flex flex-col justify-between min-h-[272px] border border-white/10 hover:border-white/30 transition-all overflow-hidden cursor-pointer"
-            onMouseEnter={() => setHovered(index)}
-            onMouseLeave={() => setHovered(null)}
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = ((e.clientX - rect.left) / rect.width - 0.5) * 18;
-              const y = ((e.clientY - rect.top) / rect.height - 0.5) * -18;
-              e.currentTarget.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-            }}
-          >
-            <div className="relative z-10">
-              <div className="w-14 h-14 mb-9 rounded-2xl bg-white/5 flex items-center justify-center">
-                <div className="w-[62px] h-[62px]">
-                  <Canvas camera={{ position: [0,0,4.4] }}>
-                    <ServiceIcon letter={service.icon} />
-                  </Canvas>
+        {services.map((service, index) => {
+          const IconComponent = service.icon;
+          return (
+            <div
+              key={index}
+              onClick={() => setSelectedService(service.title)}
+              className="tilt-card group relative glass rounded-3xl p-7 sm:p-8 flex flex-col justify-between min-h-[300px] border border-white/10 hover:border-[#22D3EE]/40 transition-all duration-300 overflow-hidden cursor-pointer shadow-xl"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+                const y = ((e.clientY - rect.top) / rect.height - 0.5) * -16;
+                e.currentTarget.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+              }}
+            >
+              <img 
+                src={service.bgImage} 
+                alt={service.title} 
+                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-65 group-hover:scale-105 transition-all duration-700 pointer-events-none"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050508] via-[#050508]/85 to-[#050508]/60 group-hover:via-[#050508]/75 group-hover:to-[#050508]/40 transition-all duration-500 pointer-events-none" />
+              <div className="relative z-10">
+                <div className="w-13 h-13 sm:w-14 sm:h-14 mb-8 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center group-hover:border-[#22D3EE]/60 group-hover:shadow-[0_0_20px_rgba(34,211,238,0.35)] transition-all duration-300">
+                  <IconComponent size={24} style={{ color: service.accentColor }} />
+                </div>
+                <div className="font-bold text-2xl sm:text-3xl tracking-tight text-white mb-2 group-hover:text-[#22D3EE] transition-colors leading-tight">
+                  {service.title}
+                </div>
+                <div className="text-white/70 text-sm font-normal leading-relaxed pr-2">
+                  {service.desc}
                 </div>
               </div>
-              <div className="font-semibold text-3xl tracking-[-1.4px] mb-3">{service.title}</div>
-              <div className="text-white/60 pr-4 text-[15px]">{service.desc}</div>
+              <div className="relative z-10 mt-auto pt-6 flex justify-between items-center text-xs tracking-[3px] font-semibold text-[#22D3EE] group-hover:text-white transition-colors">
+                <span>LEARN MORE</span>
+                <span className="text-lg leading-none transition-transform group-hover:translate-x-1">→</span>
+              </div>
             </div>
-            
-            <div className="mt-auto pt-6 flex justify-between items-center text-xs tracking-[3px] text-[#22D3EE] group-hover:text-white/90 transition-colors">
-              LEARN MORE <span className="text-lg leading-none">→</span>
-            </div>
-            
-            {hovered === index && (
-              <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/10 to-transparent pointer-events-none" />
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* Detailed View Full-Screen Modal Overlay */}
       <AnimatePresence>
         {selectedService && activeDetail && (
           <div 

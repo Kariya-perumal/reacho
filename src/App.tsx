@@ -19,28 +19,41 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2400);
+    }, 1800);
     return () => clearTimeout(timer);
   }, []);
 
-  // Initialize Lenis smooth scroll
+  // Initialize Lenis smooth scroll safely with cleanup
   useEffect(() => {
     if (!isLoading) {
-      const initLenis = async () => {
-        const Lenis = (await import('lenis')).default;
-        const lenis = new Lenis({
-          duration: 1.2,
-          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          smoothWheel: true,
-        });
+      let animId: number;
+      let lenisInstance: any;
 
-        function raf(time: number) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
+      const initLenis = async () => {
+        try {
+          const Lenis = (await import('lenis')).default;
+          lenisInstance = new Lenis({
+            duration: 1.2,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+          });
+
+          function raf(time: number) {
+            lenisInstance?.raf(time);
+            animId = requestAnimationFrame(raf);
+          }
+          animId = requestAnimationFrame(raf);
+        } catch (e) {
+          console.warn('Lenis smooth scroll fallback:', e);
         }
-        requestAnimationFrame(raf);
       };
+
       initLenis();
+
+      return () => {
+        if (animId) cancelAnimationFrame(animId);
+        if (lenisInstance) lenisInstance.destroy();
+      };
     }
   }, [isLoading]);
 
@@ -72,4 +85,3 @@ function App() {
 }
 
 export default App;
-

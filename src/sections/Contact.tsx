@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { toast } from 'sonner';
@@ -15,8 +15,6 @@ function FloatingFormVisual() {
     </group>
   );
 }
-
-import { useRef } from 'react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });

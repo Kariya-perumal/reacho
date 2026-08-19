@@ -1,28 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isActive, setIsActive] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
     const moveHandler = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
     };
 
-    const downHandler = () => setIsActive(true);
-    const upHandler = () => setIsActive(false);
+    const downHandler = () => cursor.classList.add('active');
+    const upHandler = () => cursor.classList.remove('active');
 
-    const hoverTargets = document.querySelectorAll('a, button, .tilt-card, .glass');
+    const hoverTargets = document.querySelectorAll('a, button, .tilt-card, .glass, [role="button"]');
 
-    const addActive = () => setIsActive(true);
-    const removeActive = () => setIsActive(false);
+    const addActive = () => cursor.classList.add('active');
+    const removeActive = () => cursor.classList.remove('active');
 
     hoverTargets.forEach(el => {
       el.addEventListener('mouseenter', addActive);
       el.addEventListener('mouseleave', removeActive);
     });
 
-    window.addEventListener('mousemove', moveHandler);
+    window.addEventListener('mousemove', moveHandler, { passive: true });
     window.addEventListener('mousedown', downHandler);
     window.addEventListener('mouseup', upHandler);
 
@@ -41,8 +43,8 @@ export default function CustomCursor() {
 
   return (
     <div
-      className={`custom-cursor hidden lg:block ${isActive ? 'active' : ''}`}
-      style={{ left: `${position.x}px`, top: `${position.y}px` }}
+      ref={cursorRef}
+      className="custom-cursor hidden lg:block fixed top-0 left-0 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
     />
   );
 }

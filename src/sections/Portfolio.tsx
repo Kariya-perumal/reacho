@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ExternalLink, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 
 const projects = [
@@ -26,6 +26,18 @@ const projects = [
 
 export default function Portfolio() {
   const [selected, setSelected] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelected(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = selected !== null ? 'hidden' : 'auto';
+  }, [selected]);
 
   const openProject = (id: number) => setSelected(id);
   const closeProject = () => setSelected(null);

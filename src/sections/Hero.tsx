@@ -7,7 +7,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-[#050508]">
+    <section id="hero" className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-[#050508]">
       {/* Ambient Glowing Aurora Background Orbs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[350px] sm:h-[500px] bg-gradient-to-tr from-[#2563EB]/25 via-[#7C3AED]/25 to-[#22D3EE]/25 rounded-full blur-[140px] pointer-events-none animate-pulse" />
       

@@ -463,7 +463,17 @@ export default function Services() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = selectedService ? 'hidden' : 'auto';
+    if (selectedService) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
   }, [selectedService]);
 
   const activeDetail = selectedService ? serviceDetails[selectedService] : null;
@@ -545,7 +555,10 @@ export default function Services() {
       <AnimatePresence>
         {selectedService && activeDetail && (
           <div 
-            className="fixed inset-0 z-[100] bg-[#050508]/95 backdrop-blur-2xl overflow-y-auto p-4 sm:p-6 md:p-10 flex justify-center items-start"
+            data-lenis-prevent
+            data-lenis-prevent-touch
+            className="fixed inset-0 z-[100] bg-[#050508]/95 backdrop-blur-2xl overflow-y-auto overscroll-contain p-4 sm:p-6 md:p-10 flex justify-center items-start"
+            style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
             onClick={() => setSelectedService(null)}
           >
             {/* Ambient Background Gradient Glow */}
@@ -558,16 +571,18 @@ export default function Services() {
               exit={{ opacity: 0, scale: 0.96, y: 20 }}
               transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl w-full glass-dark rounded-3xl p-6 sm:p-10 md:p-14 border border-white/15 my-8 text-white shadow-2xl overflow-hidden"
+              className="relative max-w-5xl w-full glass-dark rounded-3xl p-6 sm:p-10 md:p-14 border border-white/15 my-6 sm:my-10 text-white shadow-2xl"
             >
-              {/* Top Close Button */}
-              <button 
-                onClick={() => setSelectedService(null)}
-                className="absolute top-6 right-6 z-20 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-xs sm:text-sm font-semibold hover:bg-white/20 transition-all flex items-center gap-1.5 cursor-pointer backdrop-blur-md"
-              >
-                <X size={16} />
-                <span>CLOSE</span>
-              </button>
+              {/* Sticky Top Close Button */}
+              <div className="sticky top-0 z-30 flex justify-end -mt-2 -mr-2 mb-4 pointer-events-none">
+                <button 
+                  onClick={() => setSelectedService(null)}
+                  className="pointer-events-auto px-4 py-2 rounded-full bg-white/15 border border-white/25 text-white text-xs sm:text-sm font-semibold hover:bg-[#22D3EE] hover:text-[#050508] transition-all flex items-center gap-1.5 cursor-pointer backdrop-blur-xl shadow-lg"
+                >
+                  <X size={16} />
+                  <span>CLOSE</span>
+                </button>
+              </div>
 
               {/* HERO AREA (Two-Column Desktop / Mobile Stacked) */}
               <div className="mb-12 pb-10 border-b border-white/15">

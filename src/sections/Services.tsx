@@ -65,7 +65,7 @@ const services = [
     desc: "Engagement that builds communities",
     icon: Share2,
     accentColor: "#A855F7",
-    bgImage: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/social-media-marketing.png"
   },
   { 
     title: "Logo Design", 

@@ -32,6 +32,8 @@ const services = [
 
 interface ServiceDetail {
   tagline: string;
+  referenceLogo?: string;
+  referenceImage?: string;
   overview: string;
   deliverables: string[];
   process: { num: string; name: string; desc: string }[];
@@ -42,6 +44,7 @@ interface ServiceDetail {
 const serviceDetails: Record<string, ServiceDetail> = {
   "Full Stack Development": {
     tagline: "Build scalable digital platforms engineered for performance, reliability, and growth.",
+    referenceLogo: "/logo-symbol.png",
     overview: "Full Stack Development delivers end-to-end software architecture combining intuitive frontends with powerful backend systems. We build secure, cloud-ready applications that handle complex business workflows and scale seamlessly.",
     deliverables: [
       "Frontend Development",
@@ -73,6 +76,7 @@ const serviceDetails: Record<string, ServiceDetail> = {
 
   "SEO": {
     tagline: "Dominate search rankings and drive sustainable organic revenue for your brand.",
+    referenceLogo: "/logo-symbol.png",
     overview: "Search Engine Optimization transforms your digital presence by positioning your website at the top of search engine results. We optimize technical infrastructure, content relevance, and domain authority to turn organic search into your most profitable acquisition channel.",
     deliverables: [
       "Technical SEO Audits",
@@ -104,6 +108,7 @@ const serviceDetails: Record<string, ServiceDetail> = {
 
   "AI Automation": {
     tagline: "Streamline business operations with custom intelligent workflows and automated agents.",
+    referenceLogo: "/logo-symbol.png",
     overview: "AI Automation embeds artificial intelligence directly into your daily operations. We automate repetitive tasks, build intelligent customer assistants, and connect your business software so your team can focus on high-value strategy.",
     deliverables: [
       "AI Workflow Automation",
@@ -551,25 +556,72 @@ export default function Services() {
                 <span>CLOSE</span>
               </button>
 
-              {/* 01 — SERVICE HEADER */}
-              <div className="mb-10 pb-8 border-b border-white/10">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-[#22D3EE] font-bold text-2xl">
-                    {activeServiceObj?.icon || "★"}
-                  </div>
-                  <div>
-                    <span className="text-[#22D3EE] text-xs font-semibold tracking-[4px] uppercase block mb-1">
-                      SERVICE DETAILS
-                    </span>
-                    <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+              {/* 01 — SERVICE HEADER (Visual Header with Logo & Reference Image Split) */}
+              <div className="mb-12 pb-10 border-b border-white/15">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12">
+                  
+                  {/* Left Column (~45% width on desktop) - Logo, Service Name, Tagline */}
+                  <div className="w-full lg:w-[45%] flex flex-col justify-center">
+                    <div className="flex items-center gap-3.5 mb-5">
+                      {activeDetail.referenceLogo ? (
+                        <img 
+                          src={activeDetail.referenceLogo} 
+                          alt={`${selectedService} Logo`} 
+                          className="h-9 sm:h-11 w-auto object-contain max-w-[170px] drop-shadow-[0_0_15px_rgba(34,211,238,0.35)]"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-2xl bg-[#22D3EE]/10 border border-[#22D3EE]/30 flex items-center justify-center text-[#22D3EE] font-bold text-xl shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+                          {activeServiceObj?.icon || "★"}
+                        </div>
+                      )}
+                      <span className="text-[#22D3EE] text-[11px] font-bold tracking-[3.5px] uppercase px-3.5 py-1 rounded-full bg-[#22D3EE]/10 border border-[#22D3EE]/30">
+                        SERVICE DETAILS
+                      </span>
+                    </div>
+
+                    <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4 leading-[1.1]">
                       {selectedService}
                     </h2>
-                  </div>
-                </div>
 
-                <p className="text-xl sm:text-2xl text-[#22D3EE] font-medium max-w-3xl leading-snug tracking-tight">
-                  {activeDetail.tagline}
-                </p>
+                    <p className="text-lg sm:text-2xl text-[#22D3EE] font-medium leading-snug tracking-tight mb-4">
+                      {activeDetail.tagline}
+                    </p>
+
+                    <p className="text-sm sm:text-base text-white/70 font-normal leading-relaxed">
+                      {activeServiceObj?.desc}
+                    </p>
+                  </div>
+
+                  {/* Right Column (~55% width on desktop) - Reference Image Frame */}
+                  <div className="w-full lg:w-[55%]">
+                    {activeDetail.referenceImage ? (
+                      <div className="relative group rounded-3xl overflow-hidden glass border border-white/20 p-2 shadow-2xl transition-all duration-500 hover:border-[#22D3EE]/60 hover:shadow-[0_0_40px_rgba(34,211,238,0.25)]">
+                        {/* Subtle Ambient Light Glow */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-[#2563EB]/20 via-[#7C3AED]/20 to-[#22D3EE]/20 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" />
+                        
+                        <img 
+                          src={activeDetail.referenceImage} 
+                          alt={`${selectedService} Showcase`} 
+                          className="relative z-10 w-full aspect-[16/10] object-cover rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      /* Fallback Visual Showcase Container */
+                      <div className="relative group rounded-3xl overflow-hidden glass-dark border border-white/15 p-8 sm:p-10 flex flex-col justify-center items-center text-center aspect-[16/10] shadow-2xl">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-[#2563EB]/15 via-[#7C3AED]/15 to-[#22D3EE]/15 opacity-60 pointer-events-none" />
+                        <div className="relative z-10 w-20 h-20 rounded-3xl bg-white/5 border border-white/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                          <span className="text-4xl text-[#22D3EE] font-bold">{activeServiceObj?.icon || "★"}</span>
+                        </div>
+                        <h4 className="relative z-10 text-xl font-bold text-white mb-2">{selectedService}</h4>
+                        <p className="relative z-10 text-xs sm:text-sm text-white/60 max-w-sm leading-relaxed">
+                          {activeDetail.tagline}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                </div>
               </div>
 
               {/* 02 — OVERVIEW */}

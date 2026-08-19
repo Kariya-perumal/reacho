@@ -30,84 +30,84 @@ const services = [
     desc: "Scalable digital platforms",
     icon: Code2,
     accentColor: "#22D3EE",
-    bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/full-stack-development.webp"
   },
   { 
     title: "SEO", 
     desc: "Visibility that lasts",
     icon: Search,
     accentColor: "#22D3EE",
-    bgImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/seo.webp"
   },
   { 
     title: "AI Automation", 
     desc: "Intelligent systems & workflows",
     icon: Bot,
     accentColor: "#A855F7",
-    bgImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/ai-automation.webp"
   },
   { 
     title: "Content Strategy", 
     desc: "Stories that resonate",
     icon: PenTool,
     accentColor: "#A855F7",
-    bgImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/content-strategy.webp"
   },
   { 
     title: "Digital Marketing", 
     desc: "Data-driven campaigns that convert",
     icon: Megaphone,
     accentColor: "#22D3EE",
-    bgImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/digital-marketing.webp"
   },
   { 
     title: "Social Media Marketing", 
     desc: "Engagement that builds communities",
     icon: Share2,
     accentColor: "#A855F7",
-    bgImage: "/social-media-marketing.png"
+    bgImage: "/services/social-media-marketing.webp"
   },
   { 
     title: "Logo Design", 
     desc: "Timeless marks with meaning",
     icon: Palette,
     accentColor: "#22D3EE",
-    bgImage: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/logo-design.webp"
   },
   { 
     title: "Brand Identity", 
     desc: "Complete visual ecosystems",
     icon: ShieldCheck,
     accentColor: "#A855F7",
-    bgImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/brand-identity.webp"
   },
   { 
     title: "Web Design", 
     desc: "Stunning digital interfaces",
     icon: Monitor,
     accentColor: "#22D3EE",
-    bgImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/web-design.webp"
   },
   { 
     title: "UI/UX Design", 
     desc: "Intuitive user experiences",
     icon: Smartphone,
     accentColor: "#A855F7",
-    bgImage: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/ui-ux-design.webp"
   },
   { 
     title: "Video Editing", 
     desc: "Cinematic storytelling",
     icon: Film,
     accentColor: "#22D3EE",
-    bgImage: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/video-editing.webp"
   },
   { 
     title: "Photo Editing", 
     desc: "Visual perfection",
     icon: Camera,
     accentColor: "#A855F7",
-    bgImage: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80"
+    bgImage: "/services/photo-editing.webp"
   }
 ];
 

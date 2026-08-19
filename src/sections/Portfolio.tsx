@@ -35,10 +35,6 @@ export default function Portfolio() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = selected !== null ? 'hidden' : 'auto';
-  }, [selected]);
-
   const openProject = (id: number) => setSelected(id);
   const closeProject = () => setSelected(null);
 

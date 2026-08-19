@@ -463,18 +463,12 @@ export default function Services() {
   }, []);
 
   useEffect(() => {
-    if (selectedService) {
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedService(null);
     };
-  }, [selectedService]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const activeDetail = selectedService ? serviceDetails[selectedService] : null;
   const activeServiceObj = selectedService ? services.find(s => s.title === selectedService) : null;
@@ -551,237 +545,258 @@ export default function Services() {
         })}
       </div>
 
-      {/* Full-Screen Service Detail View Overlay */}
+      {/* Isolated Inner Scroll Service Detail View Overlay */}
       <AnimatePresence>
         {selectedService && activeDetail && (
           <div 
-            data-lenis-prevent
-            data-lenis-prevent-touch
-            className="fixed inset-0 z-[100] bg-[#050508]/95 backdrop-blur-2xl overflow-y-auto overscroll-contain p-4 sm:p-6 md:p-10 flex justify-center items-start"
-            style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
+            className="fixed inset-0 z-[100] bg-[#050508]/90 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 md:p-8 pointer-events-auto"
             onClick={() => setSelectedService(null)}
           >
             {/* Ambient Background Gradient Glow */}
             <div className="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[550px] bg-gradient-to-tr from-[#2563EB]/15 via-[#7C3AED]/15 to-[#22D3EE]/15 rounded-full blur-[140px] pointer-events-none" />
 
-            {/* Modal Container */}
+            {/* Modal Card Container */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.96, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 20 }}
               transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl w-full glass-dark rounded-3xl p-6 sm:p-10 md:p-14 border border-white/15 my-6 sm:my-10 text-white shadow-2xl"
+              className="relative max-w-5xl w-full h-[90vh] sm:h-[92vh] flex flex-col glass-dark rounded-3xl border border-white/15 text-white shadow-2xl overflow-hidden"
             >
-              {/* Sticky Top Close Button */}
-              <div className="sticky top-0 z-30 flex justify-end -mt-2 -mr-2 mb-4 pointer-events-none">
+              {/* Pinned Top Header Bar */}
+              <div className="shrink-0 px-6 sm:px-10 py-4 sm:py-5 border-b border-white/10 flex items-center justify-between bg-[#0a0a0f]/90 backdrop-blur-xl z-20">
+                <div className="flex items-center gap-3">
+                  {activeServiceObj?.icon && (
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-[#22D3EE] shadow-[0_0_12px_rgba(34,211,238,0.2)]">
+                      {<activeServiceObj.icon size={20} style={{ color: activeServiceObj.accentColor }} />}
+                    </div>
+                  )}
+                  <div>
+                    <span className="font-bold text-lg sm:text-2xl text-white tracking-tight leading-none block">
+                      {selectedService}
+                    </span>
+                    <span className="text-[10px] text-[#22D3EE] font-semibold uppercase tracking-[2px]">
+                      SERVICE DETAILS
+                    </span>
+                  </div>
+                </div>
+
                 <button 
                   onClick={() => setSelectedService(null)}
-                  className="pointer-events-auto px-4 py-2 rounded-full bg-white/15 border border-white/25 text-white text-xs sm:text-sm font-semibold hover:bg-[#22D3EE] hover:text-[#050508] transition-all flex items-center gap-1.5 cursor-pointer backdrop-blur-xl shadow-lg"
+                  className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-xs sm:text-sm font-semibold hover:bg-[#22D3EE] hover:text-[#050508] transition-all flex items-center gap-1.5 cursor-pointer backdrop-blur-md"
                 >
                   <X size={16} />
                   <span>CLOSE</span>
                 </button>
               </div>
 
-              {/* HERO AREA (Two-Column Desktop / Mobile Stacked) */}
-              <div className="mb-12 pb-10 border-b border-white/15">
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12">
-                  
-                  {/* Left Column (~45% width on desktop) */}
-                  <div className="w-full lg:w-[45%] flex flex-col justify-center">
-                    <div className="flex items-center gap-3.5 mb-4">
-                      {activeServiceObj?.icon && (
-                        <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-[#22D3EE] font-bold text-xl shadow-[0_0_15px_rgba(34,211,238,0.25)]">
-                          {<activeServiceObj.icon size={22} style={{ color: activeServiceObj.accentColor }} />}
+              {/* DEDICATED INNER SCROLL CONTAINER */}
+              <div 
+                data-lenis-prevent
+                data-lenis-prevent-touch
+                className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-6 sm:p-10 md:p-14 space-y-12"
+                style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
+              >
+                {/* HERO AREA (Two-Column Desktop / Mobile Stacked) */}
+                <div className="pb-10 border-b border-white/15">
+                  <div className="flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12">
+                    
+                    {/* Left Column (~45% width on desktop) */}
+                    <div className="w-full lg:w-[45%] flex flex-col justify-center">
+                      <div className="flex items-center gap-3.5 mb-4">
+                        {activeServiceObj?.icon && (
+                          <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-[#22D3EE] font-bold text-xl shadow-[0_0_15px_rgba(34,211,238,0.25)]">
+                            {<activeServiceObj.icon size={22} style={{ color: activeServiceObj.accentColor }} />}
+                          </div>
+                        )}
+                        <span className="text-[#22D3EE] text-[11px] font-bold tracking-[3.5px] uppercase px-3.5 py-1 rounded-full bg-[#22D3EE]/10 border border-[#22D3EE]/30">
+                          SERVICE CATEGORY
+                        </span>
+                      </div>
+
+                      <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-3 leading-[1.1]">
+                        {selectedService}
+                      </h2>
+
+                      <p className="text-lg sm:text-2xl text-[#22D3EE] font-medium leading-snug tracking-tight mb-4">
+                        {activeDetail.tagline}
+                      </p>
+
+                      <p className="text-sm sm:text-base text-white/70 font-normal leading-relaxed mb-6">
+                        {activeServiceObj?.desc}
+                      </p>
+
+                      {/* Quick CTA Buttons */}
+                      <div className="flex items-center gap-3">
+                        <button 
+                          onClick={handleGetStarted}
+                          className="px-6 py-3 rounded-full bg-white text-[#050508] font-bold text-xs tracking-wider inline-flex items-center gap-2 hover:bg-[#22D3EE] transition-all cursor-pointer"
+                        >
+                          <span>GET STARTED</span>
+                          <ArrowRight size={14} />
+                        </button>
+                        
+                        <button 
+                          onClick={handleBackToServices}
+                          className="px-6 py-3 rounded-full border border-white/20 text-white font-medium text-xs tracking-wider hover:bg-white/10 transition-colors cursor-pointer"
+                        >
+                          BACK TO SERVICES
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Right Column (~55% width on desktop) - Service Image Visual */}
+                    <div className="w-full lg:w-[55%]">
+                      {activeServiceObj?.bgImage && (
+                        <div className="relative group rounded-3xl overflow-hidden glass border border-white/20 p-2 shadow-2xl transition-all duration-500 hover:border-[#22D3EE]/60 hover:shadow-[0_0_40px_rgba(34,211,238,0.25)]">
+                          {/* Ambient Light Glow */}
+                          <div className="absolute inset-0 bg-gradient-to-tr from-[#2563EB]/20 via-[#7C3AED]/20 to-[#22D3EE]/20 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" />
+                          
+                          <img 
+                            src={activeServiceObj.bgImage} 
+                            alt={`${selectedService} Visual`} 
+                            className="relative z-10 w-full aspect-[16/10] object-cover rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#050508]/80 via-transparent to-transparent z-10 pointer-events-none rounded-2xl" />
                         </div>
                       )}
-                      <span className="text-[#22D3EE] text-[11px] font-bold tracking-[3.5px] uppercase px-3.5 py-1 rounded-full bg-[#22D3EE]/10 border border-[#22D3EE]/30">
-                        SERVICE CATEGORY
-                      </span>
                     </div>
 
-                    <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-3 leading-[1.1]">
-                      {selectedService}
-                    </h2>
-
-                    <p className="text-lg sm:text-2xl text-[#22D3EE] font-medium leading-snug tracking-tight mb-4">
-                      {activeDetail.tagline}
-                    </p>
-
-                    <p className="text-sm sm:text-base text-white/70 font-normal leading-relaxed mb-6">
-                      {activeServiceObj?.desc}
-                    </p>
-
-                    {/* Quick CTA Buttons */}
-                    <div className="flex items-center gap-3">
-                      <button 
-                        onClick={handleGetStarted}
-                        className="px-6 py-3 rounded-full bg-white text-[#050508] font-bold text-xs tracking-wider inline-flex items-center gap-2 hover:bg-[#22D3EE] transition-all cursor-pointer"
-                      >
-                        <span>GET STARTED</span>
-                        <ArrowRight size={14} />
-                      </button>
-                      
-                      <button 
-                        onClick={handleBackToServices}
-                        className="px-6 py-3 rounded-full border border-white/20 text-white font-medium text-xs tracking-wider hover:bg-white/10 transition-colors cursor-pointer"
-                      >
-                        BACK TO SERVICES
-                      </button>
-                    </div>
                   </div>
-
-                  {/* Right Column (~55% width on desktop) - Service Image Visual */}
-                  <div className="w-full lg:w-[55%]">
-                    {activeServiceObj?.bgImage && (
-                      <div className="relative group rounded-3xl overflow-hidden glass border border-white/20 p-2 shadow-2xl transition-all duration-500 hover:border-[#22D3EE]/60 hover:shadow-[0_0_40px_rgba(34,211,238,0.25)]">
-                        {/* Ambient Light Glow */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-[#2563EB]/20 via-[#7C3AED]/20 to-[#22D3EE]/20 opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" />
-                        
-                        <img 
-                          src={activeServiceObj.bgImage} 
-                          alt={`${selectedService} Visual`} 
-                          className="relative z-10 w-full aspect-[16/10] object-cover rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#050508]/80 via-transparent to-transparent z-10 pointer-events-none rounded-2xl" />
-                      </div>
-                    )}
-                  </div>
-
                 </div>
-              </div>
 
-              {/* OVERVIEW */}
-              <div className="mb-12">
-                <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-3 flex items-center gap-2">
-                  <Sparkles size={14} className="text-[#22D3EE]" />
-                  <span>OVERVIEW</span>
-                </h3>
-                <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal max-w-4xl">
-                  {activeDetail.overview}
-                </p>
-              </div>
-
-              {/* WHAT WE PROVIDE */}
-              <div className="mb-12">
-                <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-5 flex items-center gap-2">
-                  <Layers size={14} className="text-[#22D3EE]" />
-                  <span>WHAT WE PROVIDE</span>
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {activeDetail.deliverables.map((item, idx) => (
-                    <div key={idx} className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#22D3EE]/40 transition-all flex flex-col justify-between">
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <CheckCircle2 size={16} className="text-[#22D3EE] shrink-0" />
-                          <h4 className="text-base font-bold text-white">{item.title}</h4>
-                        </div>
-                        <p className="text-xs text-white/70 leading-relaxed pl-6">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
+                {/* OVERVIEW */}
+                <div>
+                  <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-3 flex items-center gap-2">
+                    <Sparkles size={14} className="text-[#22D3EE]" />
+                    <span>OVERVIEW</span>
+                  </h3>
+                  <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal max-w-4xl">
+                    {activeDetail.overview}
+                  </p>
                 </div>
-              </div>
 
-              {/* OUR PROCESS */}
-              <div className="mb-12">
-                <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-6 flex items-center gap-2">
-                  <Zap size={14} className="text-[#22D3EE]" />
-                  <span>OUR PROCESS</span>
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                  {activeDetail.process.map((step, idx) => (
-                    <div key={idx} className="p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between group hover:border-[#22D3EE]/50 transition-all">
-                      <div>
-                        <span className="text-2xl font-bold text-[#22D3EE] font-mono tracking-wider block mb-2">
-                          {step.num}
-                        </span>
-                        <h4 className="text-base font-semibold text-white mb-2">{step.name}</h4>
-                        <p className="text-xs text-white/65 leading-relaxed">{step.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* WHY THIS SERVICE & IDEAL FOR */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-                {/* WHY CHOOSE THIS SERVICE */}
+                {/* WHAT WE PROVIDE */}
                 <div>
                   <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-5 flex items-center gap-2">
-                    <ShieldCheck size={14} className="text-[#22D3EE]" />
-                    <span>WHY CHOOSE THIS SERVICE?</span>
+                    <Layers size={14} className="text-[#22D3EE]" />
+                    <span>WHAT WE PROVIDE</span>
                   </h3>
-                  <div className="space-y-3">
-                    {activeDetail.whyUs.map((benefit, idx) => (
-                      <div key={idx} className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
-                        <div className="text-sm font-bold text-white mb-1 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE]" />
-                          {benefit.title}
-                        </div>
-                        <div className="text-xs text-white/70 leading-relaxed pl-3.5">
-                          {benefit.desc}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {activeDetail.deliverables.map((item, idx) => (
+                      <div key={idx} className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#22D3EE]/40 transition-all flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <CheckCircle2 size={16} className="text-[#22D3EE] shrink-0" />
+                            <h4 className="text-base font-bold text-white">{item.title}</h4>
+                          </div>
+                          <p className="text-xs text-white/70 leading-relaxed pl-6">{item.desc}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* IDEAL FOR */}
+                {/* OUR PROCESS */}
                 <div>
-                  <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-5 flex items-center gap-2">
-                    <Users size={14} className="text-[#22D3EE]" />
-                    <span>IDEAL FOR</span>
+                  <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-6 flex items-center gap-2">
+                    <Zap size={14} className="text-[#22D3EE]" />
+                    <span>OUR PROCESS</span>
                   </h3>
-                  <div className="p-6 rounded-3xl bg-white/[0.04] border border-white/10 h-full flex flex-col justify-between">
-                    <p className="text-xs text-white/60 mb-4">
-                      This service is tailored specifically to deliver optimal results for:
-                    </p>
-                    <div className="flex flex-wrap gap-2.5">
-                      {activeDetail.idealFor.map((clientType, idx) => (
-                        <span key={idx} className="px-4 py-2 rounded-full bg-[#22D3EE]/10 border border-[#22D3EE]/30 text-[#22D3EE] font-semibold text-xs flex items-center gap-2">
-                          <Target size={13} />
-                          {clientType}
-                        </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    {activeDetail.process.map((step, idx) => (
+                      <div key={idx} className="p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between group hover:border-[#22D3EE]/50 transition-all">
+                        <div>
+                          <span className="text-2xl font-bold text-[#22D3EE] font-mono tracking-wider block mb-2">
+                            {step.num}
+                          </span>
+                          <h4 className="text-base font-semibold text-white mb-2">{step.name}</h4>
+                          <p className="text-xs text-white/65 leading-relaxed">{step.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* WHY THIS SERVICE & IDEAL FOR */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* WHY CHOOSE THIS SERVICE */}
+                  <div>
+                    <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-5 flex items-center gap-2">
+                      <ShieldCheck size={14} className="text-[#22D3EE]" />
+                      <span>WHY CHOOSE THIS SERVICE?</span>
+                    </h3>
+                    <div className="space-y-3">
+                      {activeDetail.whyUs.map((benefit, idx) => (
+                        <div key={idx} className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+                          <div className="text-sm font-bold text-white mb-1 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE]" />
+                            {benefit.title}
+                          </div>
+                          <div className="text-xs text-white/70 leading-relaxed pl-3.5">
+                            {benefit.desc}
+                          </div>
+                        </div>
                       ))}
                     </div>
-                    <div className="mt-6 pt-4 border-t border-white/10 text-xs text-white/50">
-                      Looking for custom service scopes? We tailor every deliverable to your exact business goals.
+                  </div>
+
+                  {/* IDEAL FOR */}
+                  <div>
+                    <h3 className="text-xs font-semibold tracking-[3px] text-white/50 uppercase mb-5 flex items-center gap-2">
+                      <Users size={14} className="text-[#22D3EE]" />
+                      <span>IDEAL FOR</span>
+                    </h3>
+                    <div className="p-6 rounded-3xl bg-white/[0.04] border border-white/10 h-full flex flex-col justify-between">
+                      <p className="text-xs text-white/60 mb-4">
+                        This service is tailored specifically to deliver optimal results for:
+                      </p>
+                      <div className="flex flex-wrap gap-2.5">
+                        {activeDetail.idealFor.map((clientType, idx) => (
+                          <span key={idx} className="px-4 py-2 rounded-full bg-[#22D3EE]/10 border border-[#22D3EE]/30 text-[#22D3EE] font-semibold text-xs flex items-center gap-2">
+                            <Target size={13} />
+                            {clientType}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-6 pt-4 border-t border-white/10 text-xs text-white/50">
+                        Looking for custom service scopes? We tailor every deliverable to your exact business goals.
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* CALL TO ACTION (Bottom Section with Dual Buttons) */}
-              <div className="pt-8 border-t border-white/15 text-center bg-gradient-to-b from-white/[0.02] to-white/[0.06] p-8 sm:p-10 rounded-3xl border border-white/10">
-                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                  Ready to take the next step?
-                </h3>
-                <p className="text-sm sm:text-base text-white/70 mb-6 max-w-md mx-auto">
-                  Let's discuss how our {selectedService} services can accelerate your growth.
-                </p>
+                {/* CALL TO ACTION (Bottom Section with Dual Buttons) */}
+                <div className="pt-8 border-t border-white/15 text-center bg-gradient-to-b from-white/[0.02] to-white/[0.06] p-8 sm:p-10 rounded-3xl border border-white/10">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                    Ready to take the next step?
+                  </h3>
+                  <p className="text-sm sm:text-base text-white/70 mb-6 max-w-md mx-auto">
+                    Let's discuss how our {selectedService} services can accelerate your growth.
+                  </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                  <button 
-                    onClick={handleGetStarted}
-                    className="px-10 py-4 rounded-full bg-white text-[#050508] font-bold text-xs sm:text-sm tracking-wider inline-flex items-center justify-center gap-3 hover:bg-[#22D3EE] hover:shadow-[0_0_35px_rgba(34,211,238,0.4)] active:scale-[0.98] transition-all cursor-pointer w-full sm:w-auto"
-                  >
-                    <span>GET STARTED</span>
-                    <ArrowRight size={16} />
-                  </button>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button 
+                      onClick={handleGetStarted}
+                      className="px-10 py-4 rounded-full bg-white text-[#050508] font-bold text-xs sm:text-sm tracking-wider inline-flex items-center justify-center gap-3 hover:bg-[#22D3EE] hover:shadow-[0_0_35px_rgba(34,211,238,0.4)] active:scale-[0.98] transition-all cursor-pointer w-full sm:w-auto"
+                    >
+                      <span>GET STARTED</span>
+                      <ArrowRight size={16} />
+                    </button>
 
-                  <button 
-                    onClick={handleBackToServices}
-                    className="px-10 py-4 rounded-full border border-white/30 text-white font-medium text-xs sm:text-sm tracking-wider inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-colors cursor-pointer w-full sm:w-auto"
-                  >
-                    <ArrowLeft size={16} />
-                    <span>BACK TO SERVICES</span>
-                  </button>
+                    <button 
+                      onClick={handleBackToServices}
+                      className="px-10 py-4 rounded-full border border-white/30 text-white font-medium text-xs sm:text-sm tracking-wider inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-colors cursor-pointer w-full sm:w-auto"
+                    >
+                      <ArrowLeft size={16} />
+                      <span>BACK TO SERVICES</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
 
+              </div>
             </motion.div>
           </div>
         )}

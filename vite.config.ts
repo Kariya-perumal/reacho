@@ -23,6 +23,18 @@ export default defineConfig(async ({ mode }) => {
       host: true,
       allowedHosts: true,
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
+            'vendor-motion': ['framer-motion', 'gsap'],
+            'vendor-icons': ['lucide-react'],
+          },
+        },
+      },
+    },
     envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
     define: processEnvDefines,
   } as any;

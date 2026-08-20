@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, Zap, ShieldCheck } from 'lucide-react';
+import { Canvas } from '@react-three/fiber';
+import ReachO3DLogo from '../components/ReachO3DLogo';
 
 export default function Hero() {
   const scrollTo = (id: string) => {
@@ -23,6 +25,22 @@ export default function Hero() {
       />
 
       <div className="relative z-20 max-w-5xl px-6 text-center">
+        {/* 3D Rotating REACH O Emblem Visual */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="w-44 h-44 sm:w-56 sm:h-56 mx-auto mb-4 relative z-10 pointer-events-none"
+        >
+          <Canvas camera={{ position: [0, 0, 7.2], fov: 45 }}>
+            <ambientLight intensity={1.2} />
+            <directionalLight position={[5, 5, 5]} intensity={1.5} color="#ffffff" />
+            <directionalLight position={[-5, -5, -2]} intensity={0.8} color="#22D3EE" />
+            <pointLight position={[0, 0, 4]} intensity={1.0} color="#7C3AED" />
+            <ReachO3DLogo scale={0.9} rotationSpeed={0.5} showRings={true} />
+          </Canvas>
+        </motion.div>
+
         {/* Status Pill Badge */}
         <motion.div 
           initial={{ opacity: 0, y: 15 }}

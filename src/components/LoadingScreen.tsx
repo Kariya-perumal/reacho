@@ -1,44 +1,6 @@
 import { Canvas } from '@react-three/fiber';
-import { useFrame } from '@react-three/fiber';
-import { useRef, useState, useEffect } from 'react';
-import * as THREE from 'three';
-
-function NeuralLogo() {
-  const groupRef = useRef<THREE.Group>(null!);
-
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.6;
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.15;
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      {/* Central Core */}
-      <mesh>
-        <sphereGeometry args={[0.8]} />
-        <meshBasicMaterial color="#22D3EE" />
-      </mesh>
-      
-      {/* Orbiting Rings */}
-      {[0, 1, 2].map((i) => (
-        <mesh key={i} rotation={[i * 1.2, i * 0.8, 0]}>
-          <torusGeometry args={[2.2 + i * 0.6, 0.03, 16, 64]} />
-          <meshBasicMaterial color={i === 1 ? "#7C3AED" : "#2563EB"} transparent opacity={0.8} />
-        </mesh>
-      ))}
-      
-      {/* Connection Lines */}
-      {Array.from({ length: 8 }).map((_, i) => (
-        <mesh key={i} rotation={[0, (i * Math.PI) / 4, 0]}>
-          <cylinderGeometry args={[0.015, 0.015, 4.4, 3]} />
-          <meshBasicMaterial color="#22D3EE" transparent opacity={0.6} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
+import { useState, useEffect } from 'react';
+import ReachO3DLogo from './ReachO3DLogo';
 
 export default function LoadingScreen() {
   const [progress, setProgress] = useState(0);
@@ -55,10 +17,14 @@ export default function LoadingScreen() {
 
   return (
     <div className="fixed inset-0 bg-[#050508] flex flex-col items-center justify-center z-[100]">
+      {/* 3D Rotating REACH O Logo */}
       <div className="relative w-72 h-72 mb-8">
         <Canvas camera={{ position: [0, 0, 9], fov: 45 }}>
-          <ambientLight intensity={0.8} />
-          <NeuralLogo />
+          <ambientLight intensity={1.2} />
+          <directionalLight position={[5, 5, 5]} intensity={1.5} color="#ffffff" />
+          <directionalLight position={[-5, -5, -2]} intensity={0.8} color="#22D3EE" />
+          <pointLight position={[0, 0, 4]} intensity={1.0} color="#7C3AED" />
+          <ReachO3DLogo scale={1} rotationSpeed={0.6} showRings={true} />
         </Canvas>
       </div>
       
@@ -84,3 +50,4 @@ export default function LoadingScreen() {
     </div>
   );
 }
+

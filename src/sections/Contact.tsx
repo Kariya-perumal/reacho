@@ -1,20 +1,7 @@
-import { useState, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
+import { useState } from 'react';
+import { Canvas } from '@react-three/fiber';
 import { toast } from 'sonner';
-
-function FloatingFormVisual() {
-  const groupRef = useRef<THREE.Group>(null!);
-  useFrame((state) => {
-    if (groupRef.current) groupRef.current.rotation.y = state.clock.elapsedTime * 0.35;
-  });
-  return (
-    <group ref={groupRef}>
-      <mesh><torusGeometry args={[2.1, 0.3, 16, 52]} /><meshBasicMaterial color="#2563EB" wireframe /></mesh>
-      <mesh position={[0,0,0]}><sphereGeometry args={[0.8]} /><meshBasicMaterial color="#22D3EE" /></mesh>
-    </group>
-  );
-}
+import ReachO3DLogo from '../components/ReachO3DLogo';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
@@ -116,8 +103,11 @@ export default function Contact() {
           <div className="glass rounded-3xl p-8 h-[340px] flex items-center justify-center mb-8">
             <div className="w-72 h-72">
               <Canvas camera={{ position: [0, 0, 6.2] }}>
-                <ambientLight intensity={1} />
-                <FloatingFormVisual />
+                <ambientLight intensity={1.2} />
+                <directionalLight position={[5, 5, 5]} intensity={1.5} color="#ffffff" />
+                <directionalLight position={[-5, -5, -2]} intensity={0.8} color="#22D3EE" />
+                <pointLight position={[0, 0, 4]} intensity={1.0} color="#7C3AED" />
+                <ReachO3DLogo scale={0.82} rotationSpeed={0.45} showRings={true} />
               </Canvas>
             </div>
           </div>
@@ -139,3 +129,4 @@ export default function Contact() {
     </section>
   );
 }
+

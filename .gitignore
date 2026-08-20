@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 .vite-source-tags.js
 .vercel
+*.zip
+process_*.cjs
+fetch_*.cjs
+gen_*.cjs
+build_logo_assets.cjs

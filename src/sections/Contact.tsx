@@ -22,8 +22,21 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please complete all required fields");
+    if (isSubmitting) return;
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+    const trimmedCompany = formData.company.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      toast.error("Please fill in all required fields: Name, Email, and Message.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      toast.error("Please enter a valid email address.");
       return;
     }
     
@@ -35,22 +48,44 @@ export default function Contact() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          company: trimmedCompany,
+          message: trimmedMessage,
+        }),
       });
 
-      const result = await response.json();
+      let result: any = null;
+      const contentType = response.headers.get('content-type') || '';
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit form');
+      if (contentType.includes('application/json')) {
+        try {
+          result = await response.json();
+        } catch (parseError) {
+          console.error('Failed to parse JSON response from server:', parseError);
+          result = null;
+        }
+      } else {
+        const rawText = await response.text().catch(() => '');
+        console.error('Server returned non-JSON response:', response.status, response.statusText, rawText);
       }
 
-      toast.success("Inquiry received. We'll contact you within 24 hours.", {
-        description: "Thank you for reaching out to Reach O.",
-      });
-      
-      setFormData({ name: '', email: '', company: '', message: '' });
+      if (response.ok && result && result.success !== false) {
+        toast.success("Inquiry received. We'll contact you within 24 hours.", {
+          description: "Thank you for reaching out to Reach O.",
+        });
+        setFormData({ name: '', email: '', company: '', message: '' });
+      } else {
+        const errorMessage = result?.error || result?.message || 
+          (response.status >= 500 
+            ? "Unable to send your inquiry right now. Please try again later." 
+            : "Unable to process inquiry. Please check your information and try again.");
+        toast.error(errorMessage);
+      }
     } catch (error: any) {
-      toast.error(error.message || "Failed to send message. Please try again.");
+      console.error('Contact submission network exception:', error);
+      toast.error("Network error. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
